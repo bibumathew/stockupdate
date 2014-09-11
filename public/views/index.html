@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        Quote Stream
+    </title>
+    <link rel="stylesheet" type="text/css" src="/public/css/jquery.dataTables.css">
+    <script type="text/javascript" src="/public/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/public/js/jquery.dataTables.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(document).ready(function () {
+            var socket = io.connect("http://localhost:4500");
+            socket.on('loadStock', function (data) {
+                $('#stocks').dataTable({
+                    "data": JSON.parse(data.replace(/\//g, '')),
+                    "columns": [
+                        {"data": "t"},
+                        {"data": "l"},
+                        {"data": "c"},
+                    ],
+                    retrieve: true,
+                    paging: false
+                })
+            });
+        });
+    </script>
+</head>
+
+<body>
+<table id="stocks" class="display" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Sticker</th>
+        <th>Price</th>
+        <th>Change</th>
+    </tr>
+    </thead>
+
+    <tfoot>
+    <tr>
+        <th>Sticker</th>
+        <th>Price</th>
+        <th>Change</th>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>
