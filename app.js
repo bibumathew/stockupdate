@@ -8,8 +8,8 @@ var express = require('express'),
     server = http.createServer(app),
     io = require('socket.io').listen(server),
     LISTEN_PORT = 4500,
-    BASE_STOCK_URL = 'https://finance.google.com/finance/info?client=ig&q='
-STOCK_LIST = 'EBAY,GOOG,APPL,TSLA';
+    BASE_STOCK_URL = 'https://finance.google.com/finance/info?client=ig&q=',
+    STOCK_LIST = 'EBAY,GOOG,APPL,TSLA';
 
 app.use(express.static(__dirname + '/.'));
 server.listen(LISTEN_PORT)
@@ -28,11 +28,11 @@ function pushStockData(socket) {
 }
 io.sockets.on('connection', function (socket) {
     pushStockData(socket);
-   /* var timer = setInterval(function () {
+    var timer = setInterval(function () {
         pushStockData(socket)
-    }, 3000);*/
+    }, 3000);
     socket.on('disconnect', function () {
-        //clearInterval(0);
+        clearInterval(timer);
     });
 
 });
