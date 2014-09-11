@@ -1,0 +1,22 @@
+{
+    "name": "stockupdate",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./bin/server"
+    },
+    "author": "Bibu Mathew",
+    "license": "MIT",
+    "dependencies": {
+        "express": "*",
+        "body-parser": "*",
+        "cookie-parser": "*",
+        "socket.io": "*",
+        "debug": "*",
+        "request":"*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bibumathew/stockupdate.git"
+    }
+}
