@@ -5,46 +5,40 @@
     <title>
         Quote Stream
     </title>
-    <link rel="stylesheet" type="text/css" src="/public/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/table.css">
     <script type="text/javascript" src="/public/js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="/public/js/jquery.dataTables.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         $(document).ready(function () {
-            var socket = io.connect("http://localhost:4500");
+            var socket = io.connect("http://localhost:4500"),
+            table = $("#stocks");
+            console.log(table);
             socket.on('loadStock', function (data) {
-                $('#stocks').dataTable({
-                    "data": JSON.parse(data.replace(/\//g, '')),
-                    "columns": [
-                        {"data": "t"},
-                        {"data": "l"},
-                        {"data": "c"},
-                    ],
-                    retrieve: true,
-                    paging: false
-                })
+                var data = JSON.parse(data.replace(/\//g, ''));
+                table.find("tr:gt(0)").remove();
+                 $(data).each(function (index, element) {
+                     table.append('<tr><td> ' + element.t + ' </td> <td> ' 
+                        + element.l + ' </td> <td> ' 
+                        + element.c + ' </td> <td>'
+                        + element.cp + '% </td></tr>'
+                        );
+                 });
+                
             });
         });
     </script>
 </head>
 
 <body>
-<table id="stocks" class="display" cellspacing="0" width="100%">
-    <thead>
+<table id="stocks" class="CSS_Table_Example">
+   
     <tr>
-        <th>Sticker</th>
-        <th>Price</th>
-        <th>Change</th>
+        <td>Sticker</td>
+        <td>Price</td>
+        <td>Change</td>
+        <td>Percentage</td>
     </tr>
-    </thead>
 
-    <tfoot>
-    <tr>
-        <th>Sticker</th>
-        <th>Price</th>
-        <th>Change</th>
-    </tr>
-    </tfoot>
 </table>
 </body>
 </html>
